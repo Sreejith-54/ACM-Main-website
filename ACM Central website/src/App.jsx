@@ -1,71 +1,58 @@
 import { useEffect } from 'react';
-import Lenis from 'lenis';
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import SIGSection from './components/SIGSection';
-import SIGPortal from './components/SIGPortal';
+import SIGs from './components/SIGs';
+import Marquee from './components/Marquee';
+import Events from './components/Events';
+import Projects from './components/Projects';
+import Team from './components/Team';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
-import AnimatedBackground from './components/AnimatedBackground';
-import './App.css';
+import { MARQUEE_WORDS } from './mock';
 
-function App() {
+const Home = () => {
   useEffect(() => {
-    // Initialize Lenis for smooth scrolling
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    let lastTime = 0;
-    const raf = (time) => {
-      if (time - lastTime > 1000 / 60) {
-        lenis.raf(time);
-        lastTime = time;
+    // Smooth-scroll for hash links
+    const handler = (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href');
+      if (id && id.length > 1 && document.querySelector(id)) {
+        e.preventDefault();
+        document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-      requestAnimationFrame(raf);
     };
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-acm-black overflow-x-hidden">
-      {/* Animated background */}
-      <AnimatedBackground />
-
-      {/* Navigation */}
+    <div className="App grain relative bg-[#030814]">
       <Navbar />
-
-      {/* Main content */}
-      <main className="relative z-10">
-        {/* Hero Section */}
-        <Hero />
-
-        {/* About Section */}
-        <About />
-
-        {/* SIG Section */}
-        <SIGSection />
-
-        {/* SIG Portal */}
-        <SIGPortal />
-      </main>
-
-      {/* Footer */}
+      <Hero />
+      <Marquee words={MARQUEE_WORDS} />
+      <About />
+      <SIGs />
+      <Marquee words={['sig.dev', 'sig.ai', 'sig.cp', 'sig.sec', 'sig.des']} slow reverse />
+      <Events />
+      <Projects />
+      <Team />
+      <Contact />
       <Footer />
     </div>
+  );
+};
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

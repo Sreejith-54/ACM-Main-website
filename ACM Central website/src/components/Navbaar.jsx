@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { CLUB, NAV_LINKS } from '../mock';
 
-export default function Navbar() {
+export default function Navbaar() {
     const [open, setOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 

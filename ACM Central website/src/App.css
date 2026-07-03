@@ -1,19 +1,18 @@
-/* App specific styles - clean and minimal */
-
-::-webkit-scrollbar {
-  width: 8px;
+.App {
+  min-height: 100vh;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.section-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--color-blue);
-  border-radius: 4px;
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #22d3ee;
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-cyan);
-}
-
